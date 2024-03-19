@@ -16,9 +16,19 @@ puts 'Creating Fake restaurants'
   restaurant = Restaurant.create!(
     name: Faker::Restaurant.name,
     address: Faker::Address.full_address,
-    category: %w[chinese italian japanese french belgian][rand(5)]
+    category: %w[chinese italian japanese french belgian].sample
   )
   puts "Created #{restaurant.name}, a wonderful #{restaurant.category} restaurant, located at #{restaurant.address}."
+
+  rand(1..5).times do
+    review = Review.create!(
+      content: Faker::Restaurant.review,
+      rating: rand(6),
+      restaurant_id: restaurant.id
+    )
+    puts "Review of #{review.rating}/5 given to #{restaurant.name} with following details :"
+    puts review.content
+  end
 end
 
 puts 'Done with Faking restaurants!'
