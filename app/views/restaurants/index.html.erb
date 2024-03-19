@@ -1,0 +1,13 @@
+<h1>Restaurants</h1>
+
+<ul>
+  <% @restaurants.each do |restaurant| %>
+    <li>
+      <span><%= link_to restaurant.name, restaurant %></span>
+      <%= "- rated #{Review.where(restaurant_id: restaurant.id).average(:rating).round(1)} / 5" if Review.where(restaurant_id: restaurant.id).count > 0 %>
+      <%= "- no rating available" unless Review.where(restaurant_id: restaurant.id).count > 0 %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Add a restaurant", new_restaurant_path %>
